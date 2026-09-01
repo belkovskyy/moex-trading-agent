@@ -1,0 +1,364 @@
+{
+  "trained_at": "2026-08-14T07:45:42.572296Z",
+  "dataset_path": "data\\logs\\ml_dataset_v2.jsonl",
+  "rows_total": 601216,
+  "rows_train": 480972,
+  "rows_test": 120234,
+  "task": "binary_up",
+  "entry_only": true,
+  "approved_only": false,
+  "embargo_candles": 10,
+  "cv_folds": 5,
+  "feature_columns": [
+    "price",
+    "rsi",
+    "macd",
+    "macd_signal",
+    "bollinger_low",
+    "bollinger_mid",
+    "bollinger_high",
+    "atr_pct",
+    "volume_ratio",
+    "rsi_centered",
+    "macd_diff",
+    "macd_diff_norm",
+    "bb_position",
+    "bb_width_pct",
+    "price_to_bb_low",
+    "hour_sin",
+    "hour_cos",
+    "is_morning_session",
+    "is_main_session",
+    "is_evening_session",
+    "imoex_return_60m",
+    "imoex_return_4h",
+    "sector_return_60m",
+    "corr_price_imoex_60",
+    "rel_strength_vs_imoex"
+  ],
+  "label_distribution": {
+    "not_up": 595613,
+    "up": 5603
+  },
+  "final_metrics": {
+    "classification_report": {
+      "not_up": {
+        "precision": 0.9971906891411535,
+        "recall": 0.8734568159562092,
+        "f1-score": 0.9312315675347679,
+        "support": 119477.0
+      },
+      "up": {
+        "precision": 0.02971377230137338,
+        "recall": 0.6116248348745046,
+        "f1-score": 0.05667421506824163,
+        "support": 757.0
+      },
+      "accuracy": 0.8718083071344213,
+      "macro avg": {
+        "precision": 0.5134522307212634,
+        "recall": 0.7425408254153569,
+        "f1-score": 0.49395289130150477,
+        "support": 120234.0
+      },
+      "weighted avg": {
+        "precision": 0.9910994002707199,
+        "recall": 0.8718083071344213,
+        "f1-score": 0.9257253054473619,
+        "support": 120234.0
+      }
+    },
+    "roc_auc": 0.8535736260221495,
+    "positive_class": "up"
+  },
+  "cv_metrics": [
+    {
+      "classification_report": {
+        "not_up": {
+          "precision": 0.9961432449144283,
+          "recall": 0.9543359739751197,
+          "f1-score": 0.9747915534269335,
+          "support": 99597.0
+        },
+        "up": {
+          "precision": 0.049529780564263326,
+          "recall": 0.39173553719008264,
+          "f1-score": 0.08794063079777366,
+          "support": 605.0
+        },
+        "accuracy": 0.950939103011916,
+        "macro avg": {
+          "precision": 0.5228365127393458,
+          "recall": 0.6730357555826012,
+          "f1-score": 0.5313660921123535,
+          "support": 100202.0
+        },
+        "weighted avg": {
+          "precision": 0.9904277786968692,
+          "recall": 0.950939103011916,
+          "f1-score": 0.9694369217011131,
+          "support": 100202.0
+        }
+      },
+      "roc_auc": 0.8307911129786926,
+      "positive_class": "up",
+      "base_rate_pos": 0.006037803636653959,
+      "n_train": 100202,
+      "n_test": 100202
+    },
+    {
+      "classification_report": {
+        "not_up": {
+          "precision": 0.9910706577373244,
+          "recall": 0.8159810721067435,
+          "f1-score": 0.8950434395188238,
+          "support": 98479.0
+        },
+        "up": {
+          "precision": 0.05224622143193348,
+          "recall": 0.579802669762043,
+          "f1-score": 0.09585492227979274,
+          "support": 1723.0
+        },
+        "accuracy": 0.8119199217580487,
+        "macro avg": {
+          "precision": 0.521658439584629,
+          "recall": 0.6978918709343933,
+          "f1-score": 0.4954491808993083,
+          "support": 100202.0
+        },
+        "weighted avg": {
+          "precision": 0.9749273222374921,
+          "recall": 0.8119199217580487,
+          "f1-score": 0.8813011807295497,
+          "support": 100202.0
+        }
+      },
+      "roc_auc": 0.7920245223523619,
+      "positive_class": "up",
+      "base_rate_pos": 0.017195265563561605,
+      "n_train": 200404,
+      "n_test": 100202
+    },
+    {
+      "classification_report": {
+        "not_up": {
+          "precision": 0.9950510674292062,
+          "recall": 0.7948226657120095,
+          "f1-score": 0.8837373578812818,
+          "support": 99163.0
+        },
+        "up": {
+          "precision": 0.03081979707521555,
+          "recall": 0.6227141482194418,
+          "f1-score": 0.05873275236020334,
+          "support": 1039.0
+        },
+        "accuracy": 0.7930380631125127,
+        "macro avg": {
+          "precision": 0.5129354322522109,
+          "recall": 0.7087684069657256,
+          "f1-score": 0.4712350551207426,
+          "support": 100202.0
+        },
+        "weighted avg": {
+          "precision": 0.9850529008267652,
+          "recall": 0.7930380631125127,
+          "f1-score": 0.8751828401557233,
+          "support": 100202.0
+        }
+      },
+      "roc_auc": 0.7906308526136622,
+      "positive_class": "up",
+      "base_rate_pos": 0.010369054509890022,
+      "n_train": 300606,
+      "n_test": 100202
+    },
+    {
+      "classification_report": {
+        "not_up": {
+          "precision": 0.9967505538828608,
+          "recall": 0.8809282336047878,
+          "f1-score": 0.9352672146352384,
+          "support": 99587.0
+        },
+        "up": {
+          "precision": 0.026995979322228605,
+          "recall": 0.5349593495934959,
+          "f1-score": 0.051398219028276834,
+          "support": 615.0
+        },
+        "accuracy": 0.8788048142751642,
+        "macro avg": {
+          "precision": 0.5118732666025447,
+          "recall": 0.7079437915991418,
+          "f1-score": 0.4933327168317576,
+          "support": 100202.0
+        },
+        "weighted avg": {
+          "precision": 0.990798586223984,
+          "recall": 0.8788048142751642,
+          "f1-score": 0.9298423784812866,
+          "support": 100202.0
+        }
+      },
+      "roc_auc": 0.8297301513788532,
+      "positive_class": "up",
+      "base_rate_pos": 0.0061376020438713794,
+      "n_train": 400808,
+      "n_test": 100202
+    }
+  ],
+  "feature_importances": [
+    {
+      "name": "atr_pct",
+      "importance": 1439
+    },
+    {
+      "name": "hour_cos",
+      "importance": 1127
+    },
+    {
+      "name": "hour_sin",
+      "importance": 1096
+    },
+    {
+      "name": "imoex_return_4h",
+      "importance": 919
+    },
+    {
+      "name": "bb_width_pct",
+      "importance": 906
+    },
+    {
+      "name": "volume_ratio",
+      "importance": 885
+    },
+    {
+      "name": "corr_price_imoex_60",
+      "importance": 772
+    },
+    {
+      "name": "imoex_return_60m",
+      "importance": 756
+    },
+    {
+      "name": "macd_signal",
+      "importance": 658
+    },
+    {
+      "name": "macd",
+      "importance": 634
+    },
+    {
+      "name": "rel_strength_vs_imoex",
+      "importance": 620
+    },
+    {
+      "name": "macd_diff",
+      "importance": 619
+    },
+    {
+      "name": "macd_diff_norm",
+      "importance": 619
+    },
+    {
+      "name": "bb_position",
+      "importance": 600
+    },
+    {
+      "name": "price_to_bb_low",
+      "importance": 594
+    },
+    {
+      "name": "sector_return_60m",
+      "importance": 578
+    },
+    {
+      "name": "rsi",
+      "importance": 470
+    },
+    {
+      "name": "price",
+      "importance": 410
+    },
+    {
+      "name": "rsi_centered",
+      "importance": 351
+    },
+    {
+      "name": "bollinger_low",
+      "importance": 343
+    },
+    {
+      "name": "bollinger_high",
+      "importance": 328
+    },
+    {
+      "name": "bollinger_mid",
+      "importance": 254
+    },
+    {
+      "name": "is_main_session",
+      "importance": 22
+    },
+    {
+      "name": "is_morning_session",
+      "importance": 0
+    },
+    {
+      "name": "is_evening_session",
+      "importance": 0
+    }
+  ],
+  "lightgbm_params": {
+    "boosting_type": "gbdt",
+    "class_weight": "balanced",
+    "colsample_bytree": 0.85,
+    "importance_type": "split",
+    "learning_rate": 0.03,
+    "max_depth": -1,
+    "min_child_samples": 20,
+    "min_child_weight": 0.001,
+    "min_split_gain": 0.0,
+    "n_estimators": 500,
+    "n_jobs": null,
+    "num_leaves": 31,
+    "objective": "binary",
+    "random_state": 42,
+    "reg_alpha": 0.1,
+    "reg_lambda": 0.1,
+    "subsample": 0.85,
+    "subsample_for_bin": 200000,
+    "subsample_freq": 0,
+    "min_data_in_leaf": 40,
+    "verbosity": -1,
+    "feature_name": [
+      "price",
+      "rsi",
+      "macd",
+      "macd_signal",
+      "bollinger_low",
+      "bollinger_mid",
+      "bollinger_high",
+      "atr_pct",
+      "volume_ratio",
+      "rsi_centered",
+      "macd_diff",
+      "macd_diff_norm",
+      "bb_position",
+      "bb_width_pct",
+      "price_to_bb_low",
+      "hour_sin",
+      "hour_cos",
+      "is_morning_session",
+      "is_main_session",
+      "is_evening_session",
+      "imoex_return_60m",
+      "imoex_return_4h",
+      "sector_return_60m",
+      "corr_price_imoex_60",
+      "rel_strength_vs_imoex"
+    ]
+  }
+}

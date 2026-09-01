@@ -1,6 +1,6 @@
 """Локальные данные ALGOPACK вместо обращений к API.
 
-Выгрузка лежит на диске в parquet (см. `D:\\DS\\algopack`), структура:
+Выгрузка лежит на диске в parquet, корень задаётся через ALGOPACK_LOCAL_ROOT. Структура:
 
     <root>/<market>/<dataset>/<TICKER>.parquet
     market  ∈ stocks | futures | currency
@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
@@ -28,7 +29,7 @@ from moex_agent.models import Candle
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_ROOT = Path(r"D:\DS\algopack")
+DEFAULT_ROOT = Path(os.getenv("ALGOPACK_LOCAL_ROOT", "data/algopack"))
 MARKETS = ("stocks", "futures", "currency")
 DATASETS = ("tradestats", "orderstats", "obstats")
 

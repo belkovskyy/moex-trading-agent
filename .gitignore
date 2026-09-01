@@ -14,14 +14,14 @@ __pycache__/
 venv/
 env/
 
-# data/ игнорим целиком, кроме продакшн-моделей (v4 buy + v1 short).
+# data/ игнорим целиком, кроме боевых моделей (buy v5 + short v2).
 /data/*
 !/data/models/
 /data/models/*
-!/data/models/lgbm_buy_filter_v4.joblib
-!/data/models/lgbm_buy_filter_v4.meta.json
-!/data/models/lgbm_short_filter_v1.joblib
-!/data/models/lgbm_short_filter_v1.meta.json
+!/data/models/lgbm_buy_filter_v5.joblib
+!/data/models/lgbm_buy_filter_v5.meta.json
+!/data/models/lgbm_short_filter_v2.joblib
+!/data/models/lgbm_short_filter_v2.meta.json
 logs/
 *.log
 
@@ -39,3 +39,6 @@ Desktop.ini
 
 # AI assistant context — not part of the solution
 CLAUDE.md
+
+# внутренние рабочие заметки
+HANDOFF.md
