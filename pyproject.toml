@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moex-ai-agent"
+version = "0.1.0"
+description = "Autonomous MOEX/ArenaGo trading agent scaffold"
+requires-python = ">=3.11"
+dependencies = [
+  "requests==2.33.1",
+  "python-dotenv==1.2.2",
+  "moexalgo==2.5.9",
+]
+
+[project.scripts]
+moex-agent = "moex_agent.app:main"
+moex-report = "moex_agent.report:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

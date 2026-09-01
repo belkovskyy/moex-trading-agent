@@ -1,0 +1,45 @@
+# Skip everything that shouldn't go into the Docker image. Smaller image =
+# faster GitLab pipeline + faster bot start on the Yandex Cloud server.
+
+.git/
+.gitignore
+.gitlab-ci.yml
+
+# .env IS shipped in the image (Dockerfile COPY .env) so the container has full
+# config + tokens and trades live on restart. SANDBOX_API_KEY is blanked in it
+# and injected via ENV by ArenaGo at runtime.
+.env.*
+!.env.example
+
+# Python cache and tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Local runtime data — server has its own /data persistent volume.
+data/logs/
+data/state/
+data/reports/
+data/backtests/
+data/retro/
+*.log
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Project notes / drafts — not needed in production image
+PROJECT_CONTEXT.md
+CONTEXT_UPDATES.md
+*.bak
+*.new
+src/moex_agent/app.py.new

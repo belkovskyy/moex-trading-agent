@@ -1,0 +1,5 @@
+requests==2.33.1
+python-dotenv==1.2.2
+moexalgo==2.5.9
+scikit-learn==1.7.2
+lightgbm==4.6.0

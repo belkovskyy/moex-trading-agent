@@ -1,0 +1,41 @@
+# Секреты не коммитим. Конфиг-шаблон — в .env.example.
+.env
+.env.*
+!.env.example
+
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.venv/
+venv/
+env/
+
+# data/ игнорим целиком, кроме продакшн-моделей (v4 buy + v1 short).
+/data/*
+!/data/models/
+/data/models/*
+!/data/models/lgbm_buy_filter_v4.joblib
+!/data/models/lgbm_buy_filter_v4.meta.json
+!/data/models/lgbm_short_filter_v1.joblib
+!/data/models/lgbm_short_filter_v1.meta.json
+logs/
+*.log
+
+build/
+dist/
+*.egg-info/
+
+# Hackathon task description (don't redistribute organizers' material)
+*.pdf
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+# AI assistant context — not part of the solution
+CLAUDE.md
