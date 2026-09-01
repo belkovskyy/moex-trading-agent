@@ -14,7 +14,12 @@ from moex_agent.indicators import build_features
 from moex_agent.llm import BriefService, ExplainerService, NewsService, PolzaClient, compact_headlines, default_brief
 from moex_agent.logging_config import configure_logging
 from moex_agent.macro_data import LiveMacroCache, candles_to_pairs
-from moex_agent.market_data import AlgopackMarketDataClient, MarketDataClient, SampleMarketDataClient
+from moex_agent.market_data import (
+    AlgopackMarketDataClient,
+    IssMarketDataClient,
+    MarketDataClient,
+    SampleMarketDataClient,
+)
 from moex_agent.memory import DecisionMemory, SimilarSetupsIndex
 from moex_agent.ml_data import MLDataCollector
 from moex_agent.ml_filter import MLBuyFilter
@@ -1131,8 +1136,14 @@ def split_risk_reasons(reason: str) -> list[str]:
 
 
 def build_market_data_client() -> MarketDataClient:
-    if settings.market_data_provider.lower() == "sample":
+    provider = settings.market_data_provider.lower()
+    if provider == "sample":
         return SampleMarketDataClient()
+    if provider == "iss":
+        return IssMarketDataClient(
+            period=settings.candle_period,
+            lookback_days=settings.candle_lookback_days,
+        )
     return AlgopackMarketDataClient(
         settings.moex_algo_token,
         period=settings.candle_period,
@@ -1302,11 +1313,13 @@ def main() -> None:
     # at most 1 IMOEX+sector fetch every 5 minutes, regardless of how many
     # tickers we have on the watchlist.
     macro_cache: LiveMacroCache | None = None
-    if settings.moex_algo_token:
+    _macro_via_iss = settings.market_data_provider.lower() == "iss"
+    if settings.moex_algo_token or _macro_via_iss:
         macro_cache = LiveMacroCache(
             refresh_seconds=300.0,
             lookback_hours=6,
             period=settings.candle_period,
+            use_iss=_macro_via_iss,
         )
 
     # Scheduler for periodic LLM-driven supervisors. They run as subprocesses

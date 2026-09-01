@@ -28,6 +28,8 @@ import requests
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_BASE_URL = "https://api.polza.ai"
+
 
 @dataclass(frozen=True)
 class LLMResponse:
@@ -81,7 +83,7 @@ class PolzaClient:
     def __init__(
         self,
         api_key: str,
-        base_url: str = "https://api.polza.ai",
+        base_url: str = DEFAULT_BASE_URL,
         *,
         timeout: float = 15.0,
         max_retries: int = 2,
@@ -89,6 +91,7 @@ class PolzaClient:
     ):
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
+        self.local = self.base_url != DEFAULT_BASE_URL.rstrip("/")
         self.timeout = timeout
         self.max_retries = max_retries
         self.backoff_seconds = backoff_seconds
@@ -98,7 +101,8 @@ class PolzaClient:
         self._session.headers.update({"Content-Type": "application/json"})
 
     def enabled(self) -> bool:
-        return bool(self.api_key)
+        # Свой эндпоинт (Ollama, LM Studio, vLLM) работает без ключа.
+        return bool(self.api_key) or self.local
 
     def chat(
         self,
@@ -113,8 +117,8 @@ class PolzaClient:
         # with 4xx for some upstream models, producing silent no_response in
         # production. If we need GPT-5 thinking control later, validate
         # against the live API first.
-        if not self.api_key:
-            logger.debug("polza client called without api key — skipping")
+        if not self.api_key and not self.local:
+            logger.debug("llm client called without api key — skipping")
             return None
         payload: dict[str, Any] = {
             "model": model,

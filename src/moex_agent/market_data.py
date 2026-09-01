@@ -185,3 +185,41 @@ def _sample_candles(symbol: str, limit: int) -> list[Candle]:
         )
         price = close
     return candles
+
+
+class IssMarketDataClient:
+    """Свечи с MOEX ISS: бесплатно и без токена, микроструктуры нет."""
+
+    _PERIOD_TO_INTERVAL = {"1min": 1, "10min": 10, "60min": 60, "1h": 60, "1d": 24}
+
+    def __init__(self, *, period: str = "10min", lookback_days: int = 5):
+        self.interval = self._PERIOD_TO_INTERVAL.get(period, 10)
+        self.lookback_days = lookback_days
+        self._cache: dict[str, list[Candle]] = {}
+
+    def get_candles(self, symbol: str, limit: int = 120) -> list[Candle]:
+        cached = self._cache.get(symbol)
+        if cached is None:
+            from moex_agent.moex_iss import fetch_candles
+
+            today = date.today()
+            try:
+                cached = fetch_candles(
+                    symbol,
+                    start=today - timedelta(days=self.lookback_days),
+                    end=today,
+                    interval=self.interval,
+                    use_cache=False,
+                )
+            except Exception as exc:
+                raise MarketDataError(f"iss candles failed for {symbol}: {exc}") from exc
+            self._cache[symbol] = cached
+        if not cached:
+            raise MarketDataError(f"iss returned no candles for {symbol}")
+        return cached[-limit:]
+
+    def get_super_features(self, symbol: str) -> dict[str, float]:
+        return {}
+
+    def reset_cycle_cache(self) -> None:
+        self._cache.clear()

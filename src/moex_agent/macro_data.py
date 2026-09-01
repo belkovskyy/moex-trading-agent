@@ -402,10 +402,12 @@ class LiveMacroCache:
     `refresh_seconds`.
     """
 
-    def __init__(self, *, refresh_seconds: float = 300.0, lookback_hours: int = 6, period: str = "10min"):
+    def __init__(self, *, refresh_seconds: float = 300.0, lookback_hours: int = 6, period: str = "10min",
+                 use_iss: bool = False):
         self._refresh_seconds = float(refresh_seconds)
         self._lookback_hours = int(lookback_hours)
         self._period = period
+        self._use_iss = use_iss
         self._cache: dict[str, MacroSeries] = {}
         self._last_refresh: float = 0.0
         self._symbols_seen: set[str] = set()
@@ -443,13 +445,21 @@ class LiveMacroCache:
             end = date.today()
             start = end - timedelta(days=max(2, self._lookback_hours // 24 + 1))
             symbols = sorted(self._symbols_seen) if self._symbols_seen else list(SECTOR_INDEX_MAP.keys())
-            self._cache = fetch_macro_bundle(
-                symbols,
-                start=start,
-                end=end,
-                period=self._period,
-                chunk_days=30,
-            )
+            if self._use_iss:
+                from moex_agent.moex_iss import fetch_macro_bundle_iss
+
+                interval = {"1min": 1, "10min": 10, "60min": 60, "1h": 60}.get(self._period, 10)
+                self._cache = fetch_macro_bundle_iss(
+                    symbols, start=start, end=end, interval=interval
+                )
+            else:
+                self._cache = fetch_macro_bundle(
+                    symbols,
+                    start=start,
+                    end=end,
+                    period=self._period,
+                    chunk_days=30,
+                )
             self._last_refresh = now
             logger.info("LiveMacroCache refreshed: %s", {k: len(v) for k, v in self._cache.items()})
         except Exception as exc:  # pragma: no cover - depends on network
